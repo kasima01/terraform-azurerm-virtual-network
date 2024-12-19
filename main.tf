@@ -40,10 +40,9 @@ module "subnet" {
 resource "azurerm_route_table" "route_table" {
   for_each = var.route_tables
 
-  name                          = "${var.resource_group_name}-${each.key}-routetable"
-  location                      = var.location
-  resource_group_name           = var.resource_group_name
-  disable_bgp_route_propagation = each.value.disable_bgp_route_propagation
+  name                = "${var.resource_group_name}-${each.key}-routetable"
+  location            = var.location
+  resource_group_name = var.resource_group_name
 
   dynamic "route" {
     for_each = (each.value.use_inline_routes ? each.value.routes : {})
@@ -109,10 +108,10 @@ resource "azurerm_route_table" "aks_route_table" {
     ignore_changes = [tags]
   }
 
-  name                          = "${var.resource_group_name}-aks-${each.key}-routetable"
-  location                      = var.location
-  resource_group_name           = var.resource_group_name
-  disable_bgp_route_propagation = each.value.disable_bgp_route_propagation
+  name                = "${var.resource_group_name}-aks-${each.key}-routetable"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+
 }
 
 resource "azurerm_route" "aks_route" {
